@@ -50,13 +50,12 @@ class _AuthScreenState extends State<AuthScreen> {
         'email': email,
         'username': username,
       });
-       setState(() {
-        _isLoading = false;
-      });
-    } on PlatformException catch (error) {
       setState(() {
         _isLoading = false;
       });
+    } on PlatformException catch (error) {
+      _isLoading = false;
+
       var erroMessage =
           error.message ?? 'An error occurred, please check your credientials';
 
@@ -67,9 +66,8 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
+      _isLoading = false;
+
       print(error);
 
       ScaffoldMessenger.of(ctx).showSnackBar(
