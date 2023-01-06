@@ -16,7 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
-  void _submitAuthForm(
+  Future<void> _submitAuthForm(
     String email,
     String username,
     String password,
@@ -25,6 +25,11 @@ class _AuthScreenState extends State<AuthScreen> {
   ) async {
     UserCredential userCredential;
 
+    final scaffold = ScaffoldMessenger.of(ctx);
+    SnackBar snackbar(String msg) => SnackBar(
+          content: Text(msg),
+          backgroundColor: Colors.red,
+        );
     try {
       setState(() {
         _isLoading = true;
@@ -50,33 +55,27 @@ class _AuthScreenState extends State<AuthScreen> {
         'email': email,
         'username': username,
       });
+    } on PlatformException catch (error) {
       setState(() {
         _isLoading = false;
       });
-    } on PlatformException catch (error) {
-      _isLoading = false;
-
-      var erroMessage =
+      var errorMessage =
           error.message ?? 'An error occurred, please check your credientials';
 
-      ScaffoldMessenger.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(erroMessage),
-          backgroundColor: Theme.of(ctx).errorColor,
-        ),
+      scaffold.showSnackBar(
+        snackbar(errorMessage),
       );
     } catch (error) {
-      _isLoading = false;
-
+      setState(() {
+        _isLoading = false;
+      });
       print(error);
 
-      ScaffoldMessenger.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(error.toString()),
-          backgroundColor: Theme.of(ctx).errorColor,
-        ),
-      );
+      scaffold.showSnackBar(snackbar(error.toString()));
     }
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   @override

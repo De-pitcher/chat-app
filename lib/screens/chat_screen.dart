@@ -15,15 +15,21 @@ class ChatScreen extends StatelessWidget {
         title: const Text('ChatApp'),
         actions: [
           DropdownButton(
-            icon: const Icon(Icons.more_vert),
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
             items: [
               DropdownMenuItem(
                 value: 'Logout',
                 child: Row(
-                  children: const [
-                    Icon(Icons.exit_to_app),
-                    SizedBox(width: 8),
-                    Text('Logout'),
+                  children: [
+                    Icon(
+                      Icons.exit_to_app,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(width: 2),
+                    const Text('Logout'),
                   ],
                 ),
               ),
