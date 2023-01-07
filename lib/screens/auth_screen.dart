@@ -57,6 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
       await ref.putFile(image).catchError(
             () => print('An error occurred while uploading image!'),
           );
+      final userImageUrl = await ref.getDownloadURL();
       await FirebaseFirestore.instance
           .collection('users')
           .doc(
@@ -65,6 +66,7 @@ class _AuthScreenState extends State<AuthScreen> {
           .set({
         'email': email,
         'username': username,
+        'userImage': userImageUrl,
       });
     } on PlatformException catch (error) {
       setState(() {
