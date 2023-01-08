@@ -42,10 +42,12 @@ class MessageBubble extends StatelessWidget {
                 horizontal: 16,
               ),
               margin: const EdgeInsets.symmetric(
-                vertical: 4,
+                vertical: 16,
                 horizontal: 8,
               ),
               child: Column(
+                crossAxisAlignment:
+                    isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
                   Text(
                     username,
